@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work Scheduler Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 5px;
+        }
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        .controls {
+            background-color: #ecf0f1;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            display: flex;
+            gap: 10px;
+        }
+        .section-title {
+            background-color: #34495e;
+            color: white;
+            padding: 12px 15px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .metric-card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .metric-card-title {
+            font-weight: bold;
+            font-size: 14px;
+            padding: 12px 15px;
+            color: white;
+        }
+        .metric-card.progress .metric-card-title {
+            background-color: #3498db;
+        }
+        .metric-card.stats .metric-card-title {
+            background-color: #2ecc71;
+        }
+        .metric-card.info .metric-card-title {
+            background-color: #e74c3c;
+        }
+        .metric-card-content {
+            padding: 15px;
+            font-size: 13px;
+        }
+        .metric-card-content p {
+            margin: 8px 0;
+        }
+        .metric-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .chart-container {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+            min-height: 300px;
+        }
+        .burndown-chart {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .chart-legend {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 10px;
+            font-size: 13px;
+            color: #555;
+        }
+        .legend-dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+        .list-container {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .list-header {
+            background-color: #ecf0f1;
+            padding: 12px 15px;
+            font-weight: bold;
+            font-size: 13px;
+            border-bottom: 1px solid #ddd;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 10px;
+        }
+        .list-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 10px;
+            align-items: center;
+            font-size: 13px;
+        }
+        .list-item:last-child {
+            border-bottom: none;
+        }
+        .list-item:hover {
+            background-color: #f9f9f9;
+        }
+        .delayed {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .in-progress {
+            color: #f39c12;
+        }
+        .completed {
+            color: #2ecc71;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+        }
+        .table th {
+            background-color: #34495e;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+            border-bottom: 2px solid #2c3e50;
+        }
+        .table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        .table tr:hover {
+            background-color: #f9f9f9;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+        }
+        .status-on-track {
+            background-color: #2ecc71;
+        }
+        .status-at-risk {
+            background-color: #f39c12;
+        }
+        .status-delayed {
+            background-color: #e74c3c;
+        }
+        .trend {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .trend-up {
+            color: #2ecc71;
+        }
+        .trend-stable {
+            color: #95a5a6;
+        }
+        .trend-down {
+            color: #e74c3c;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #ecf0f1;
+            border-radius: 3px;
+            overflow: hidden;
+            border: 1px solid #bdc3c7;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2980b9);
+            transition: width 0.3s ease;
+        }
+        .footer {
+            background-color: #34495e;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            margin-top: 40px;
+            border-radius: 5px;
+        }
+        .empty-state {
+            padding: 30px;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        @media (max-width: 768px) {
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            .list-header, .list-item {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 24px;
+            }
+            .table {
+                font-size: 12px;
+            }
+            .table th, .table td {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📊 Work Scheduler Dashboard</h1>
+        <p>Generated: 2026-07-21 00:58:27</p>
+    </div>
+    
+    <div class="container">
+        <div class="controls">
+            [Filter] [Export] [Refresh] [Settings]
+        </div>
+        
+        <div class="section-title">📈 Key Metrics</div>
+        <div class="metrics-grid">
+            <div class="metric-card progress">
+                <div class="metric-card-title">Overall Progress</div>
+                <div class="metric-card-content">
+                    
+        <p><strong>計画進捗:</strong></p>
+        <p style="margin-left: 10px; font-size: 16px;">
+            <span class="metric-value">100.0%</span>
+        </p>
+        <p style="margin-top: 15px;"><strong>実績進捗:</strong></p>
+        <p style="margin-left: 10px; font-size: 16px;">
+            <span class="metric-value">49.6%</span>
+        </p>
+        <p style="margin-top: 15px;"><strong>差分:</strong></p>
+        <p style="margin-left: 10px; font-size: 14px; color: #e74c3c;">
+            -50.4%
+        </p>
+        
+                </div>
+            </div>
+            <div class="metric-card stats">
+                <div class="metric-card-title">Task Statistics</div>
+                <div class="metric-card-content">
+                    
+        <p>• <strong>Total Tasks:</strong> <span class="metric-value">12</span></p>
+        <p>• <strong>Completed:</strong> 4 (33%)</p>
+        <p>• <strong>In Progress:</strong> 4 (33%)</p>
+        <p>• <strong>Not Started:</strong> 4 (33%)</p>
+        
+                </div>
+            </div>
+            <div class="metric-card info">
+                <div class="metric-card-title">Key Information</div>
+                <div class="metric-card-content">
+                    
+        <p>• <strong>Last Updated:</strong> 2026-07-21</p>
+        <p>• <strong>Delayed Items:</strong> <span class="delayed">8</span></p>
+        <p>• <strong>Status:</strong> Monitoring</p>
+        
+                </div>
+            </div>
+        </div>
+        
+        <div class="section-title">📉 Burndown Chart</div>
+        <div class="chart-container">
+            <svg class="burndown-chart" viewBox="0 0 760 320" role="img" aria-label="Cumulative progress burndown chart">
+<rect x="0" y="0" width="760" height="320" fill="#ffffff"></rect>
+<line x1="60" y1="40" x2="60" y2="250" stroke="#bdc3c7" stroke-width="2"></line>
+<line x1="60" y1="250" x2="720" y2="250" stroke="#bdc3c7" stroke-width="2"></line>
+<line x1="60" y1="40.0" x2="720" y2="40.0" stroke="#eaf2f8" stroke-width="1"></line>
+<line x1="60" y1="145.0" x2="720" y2="145.0" stroke="#eaf2f8" stroke-width="1"></line>
+<line x1="60" y1="250.0" x2="720" y2="250.0" stroke="#eaf2f8" stroke-width="1"></line>
+<polyline points="60.0,250.0 223.0,198.1 390.0,145.0 553.0,93.1 720.0,40.0" fill="none" stroke="#3498db" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></polyline>
+<polyline points="60.0,250.0 223.0,227.2 390.0,203.8 553.0,181.0 720.0,157.6" fill="none" stroke="#e74c3c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></polyline>
+<line x1="720.0" y1="40" x2="720.0" y2="250" stroke="#e74c3c" stroke-width="2" stroke-dasharray="6 6"></line>
+<text x="726.0" y="30" font-size="12" fill="#e74c3c">作成日: 2026-07-21</text>
+<text x="60.0" y="274" font-size="12" text-anchor="middle" fill="#34495e">01/15</text>
+<text x="223.0" y="274" font-size="12" text-anchor="middle" fill="#34495e">02/25</text>
+<text x="390.0" y="274" font-size="12" text-anchor="middle" fill="#34495e">04/08</text>
+<text x="553.0" y="274" font-size="12" text-anchor="middle" fill="#34495e">05/19</text>
+<text x="720.0" y="274" font-size="12" text-anchor="middle" fill="#34495e">06/30</text>
+<text x="20" y="60" font-size="12" fill="#34495e">100%</text>
+<text x="20" y="170" font-size="12" fill="#34495e">50%</text>
+<text x="20" y="285" font-size="12" fill="#34495e">0%</text>
+<circle cx="720.0" cy="145.90517241379308" r="6" fill="#e74c3c"></circle>
+<text x="120" y="20" font-size="12" fill="#34495e">累積進捗（初期0% → 最終100%）</text>
+</svg>
+        <div class="chart-legend">
+            <div><span class="legend-dot" style="background:#3498db"></span>計画進捗（累積）</div>
+            <div><span class="legend-dot" style="background:#e74c3c"></span>実績進捗（累積）</div>
+            <div><span class="legend-dot" style="background:#e74c3c"></span>赤点線: HTML作成日</div>
+        </div>
+        
+        </div>
+        
+        <div class="section-title">⚠️ Delayed Tasks & Items</div>
+        <div class="list-container">
+            <div class="list-header">
+                <div>Item Name</div>
+                <div>Type</div>
+                <div>Days Delayed</div>
+            </div>
+            
+                <div class="list-item">
+                    <div><strong>DB インスタンス構築</strong></div>
+                    <div>Task</div>
+                    <div class="delayed">82 days</div>
+                </div>
+                
+                <div class="list-item">
+                    <div><strong>データ抽出</strong></div>
+                    <div>Task</div>
+                    <div class="delayed">97 days</div>
+                </div>
+                
+                <div class="list-item">
+                    <div><strong>データ検証</strong></div>
+                    <div>Task</div>
+                    <div class="delayed">82 days</div>
+                </div>
+                
+                <div class="list-item">
+                    <div><strong>データ変換</strong></div>
+                    <div>Task</div>
+                    <div class="delayed">36 days</div>
+                </div>
+                
+                <div class="list-item">
+                    <div><strong>データロード</strong></div>
+                    <div>Task</div>
+                    <div class="delayed">21 days</div>
+                </div>
+                
+                <div class="list-item">
+                    <div><strong>リスク分析</strong></div>
+                    <div>Task</div>
+                    <div class="delayed">128 days</div>
+                </div>
+                
+                <div class="list-item">
+                    <div><strong>ファイアウォール構築</strong></div>
+                    <div>Task</div>
+                    <div class="delayed">82 days</div>
+                </div>
+                
+                <div class="list-item">
+                    <div><strong>認証システム導入</strong></div>
+                    <div>Task</div>
+                    <div class="delayed">51 days</div>
+                </div>
+                
+        </div>
+        
+        <div class="section-title">🔄 In-Progress Tasks & Items</div>
+        <div class="list-container">
+            <div class="list-header">
+                <div>Item Name</div>
+                <div>Type</div>
+                <div>Progress</div>
+            </div>
+            
+                <div class="list-item">
+                    <div><strong>DB インスタンス構築</strong></div>
+                    <div>Task</div>
+                    <div>
+                        <div class="progress-bar" style="width: 60px;">
+                            <div class="progress-fill" style="width: 50.0%;"></div>
+                        </div>
+                        50%
+                    </div>
+                </div>
+                
+                <div class="list-item">
+                    <div><strong>データ抽出</strong></div>
+                    <div>Task</div>
+                    <div>
+                        <div class="progress-bar" style="width: 60px;">
+                            <div class="progress-fill" style="width: 50.0%;"></div>
+                        </div>
+                        50%
+                    </div>
+                </div>
+                
+                <div class="list-item">
+                    <div><strong>リスク分析</strong></div>
+                    <div>Task</div>
+                    <div>
+                        <div class="progress-bar" style="width: 60px;">
+                            <div class="progress-fill" style="width: 50.0%;"></div>
+                        </div>
+                        50%
+                    </div>
+                </div>
+                
+                <div class="list-item">
+                    <div><strong>ファイアウォール構築</strong></div>
+                    <div>Task</div>
+                    <div>
+                        <div class="progress-bar" style="width: 60px;">
+                            <div class="progress-fill" style="width: 50.0%;"></div>
+                        </div>
+                        50%
+                    </div>
+                </div>
+                
+        </div>
+        
+        <div class="section-title">🎯 Theme Progress Overview</div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Theme Name</th>
+                    <th>Status</th>
+                    <th>Actual Progress</th>
+                    <th>Planned Progress</th>
+                    <th>Trend</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            <tr>
+                <td><strong>システム基盤構築</strong></td>
+                <td><span class="status-badge status-delayed">Delayed</span></td>
+                <td>
+                    <div class="progress-bar" style="width: 80px; margin-bottom: 5px;">
+                        <div class="progress-fill" style="width: 85.8%;"></div>
+                    </div>
+                    85.8%
+                </td>
+                <td>100.0%</td>
+                <td><span class="trend trend-down">↓</span></td>
+            </tr>
+            
+            <tr>
+                <td><strong>データ移行</strong></td>
+                <td><span class="status-badge status-delayed">Delayed</span></td>
+                <td>
+                    <div class="progress-bar" style="width: 80px; margin-bottom: 5px;">
+                        <div class="progress-fill" style="width: 18.9%;"></div>
+                    </div>
+                    18.9%
+                </td>
+                <td>100.0%</td>
+                <td><span class="trend trend-down">↓</span></td>
+            </tr>
+            
+            <tr>
+                <td><strong>セキュリティ構築</strong></td>
+                <td><span class="status-badge status-delayed">Delayed</span></td>
+                <td>
+                    <div class="progress-bar" style="width: 80px; margin-bottom: 5px;">
+                        <div class="progress-fill" style="width: 48.8%;"></div>
+                    </div>
+                    48.8%
+                </td>
+                <td>100.0%</td>
+                <td><span class="trend trend-down">↓</span></td>
+            </tr>
+            
+            </tbody>
+        </table>
+        
+        <div class="footer">
+            <p>Work Scheduler v1.0 | Generated: 2026-07-21 00:58:27<br>
+            © 2026 Project Management System</p>
+        </div>
+    </div>
+</body>
+</html>
+    

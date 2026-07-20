@@ -1,0 +1,125 @@
+<mxfile host="65bd71144e">
+    <diagram id="dashboard_layout" name="Dashboard Layout">
+        <mxGraphModel dx="1400" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="2000" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                
+                <!-- Main Container -->
+                <mxCell id="main_container" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333;strokeWidth=2;" vertex="1" parent="1">
+                    <mxGeometry x="50" y="30" width="1300" height="1900" as="geometry"/>
+                </mxCell>
+                
+                <!-- Header -->
+                <mxCell id="header" value="Work Scheduler Dashboard" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#2c3e50;fontColor=#ffffff;fontSize=24;fontStyle=1;" vertex="1" parent="1">
+                    <mxGeometry x="50" y="30" width="1300" height="70" as="geometry"/>
+                </mxCell>
+                
+                <!-- Control Bar -->
+                <mxCell id="controls" value="[Filter Controls] [Export] [Refresh] [Settings]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ecf0f1;fontSize=12;" vertex="1" parent="1">
+                    <mxGeometry x="50" y="100" width="1300" height="40" as="geometry"/>
+                </mxCell>
+                
+                <!-- Section 1: Key Metrics (3 columns) -->
+                <mxCell id="metrics_title" value="Key Metrics" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#34495e;fontColor=#ffffff;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+                    <mxGeometry x="50" y="150" width="1300" height="30" as="geometry"/>
+                </mxCell>
+                
+                <!-- Metric 1: Overall Progress -->
+                <mxCell id="metric_progress" value="" style="rounded=5;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#34495e;strokeWidth=1;" vertex="1" parent="1">
+                    <mxGeometry x="60" y="190" width="410" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="metric_progress_title" value="Overall Progress" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#3498db;fontColor=#ffffff;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+                    <mxGeometry x="60" y="190" width="410" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="metric_progress_content" value="計画進捗: 45%&#xa;実績進捗: 38%&#xa;差分: -7%&#xa;[Progress Bar Graph]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=11;verticalAlign=top;align=left;padding=5;" vertex="1" parent="1">
+                    <mxGeometry x="60" y="215" width="410" height="95" as="geometry"/>
+                </mxCell>
+                
+                <!-- Metric 2: Task Statistics -->
+                <mxCell id="metric_stats" value="" style="rounded=5;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#34495e;strokeWidth=1;" vertex="1" parent="1">
+                    <mxGeometry x="490" y="190" width="410" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="metric_stats_title" value="Task Statistics" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#2ecc71;fontColor=#ffffff;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+                    <mxGeometry x="490" y="190" width="410" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="metric_stats_content" value="• Total Tasks: 45&#xa;• Completed: 28 (62%)&#xa;• In Progress: 12 (27%)&#xa;• Not Started: 5 (11%)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=11;verticalAlign=top;align=left;padding=5;" vertex="1" parent="1">
+                    <mxGeometry x="490" y="215" width="410" height="95" as="geometry"/>
+                </mxCell>
+                
+                <!-- Metric 3: Key Information -->
+                <mxCell id="metric_info" value="" style="rounded=5;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#34495e;strokeWidth=1;" vertex="1" parent="1">
+                    <mxGeometry x="920" y="190" width="410" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="metric_info_title" value="Key Information" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e74c3c;fontColor=#ffffff;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+                    <mxGeometry x="920" y="190" width="410" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="metric_info_content" value="• Last Updated: 2026-07-21&#xa;• Delayed Items: 3&#xa;• At Risk Items: 2&#xa;• Status: Monitoring" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=11;verticalAlign=top;align=left;padding=5;" vertex="1" parent="1">
+                    <mxGeometry x="920" y="215" width="410" height="95" as="geometry"/>
+                </mxCell>
+                
+                <!-- Section 2: Burndown Chart -->
+                <mxCell id="chart_title" value="Burndown Chart (計画 vs 実績)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#34495e;fontColor=#ffffff;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+                    <mxGeometry x="50" y="330" width="1300" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="chart_container" value="[Line Chart: Planned vs Actual Progress Over Time]&#xa;X-Axis: Date | Y-Axis: Progress %&#xa;Blue Line: Planned | Red Line: Actual" style="rounded=5;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#34495e;strokeWidth=1;fontSize=11;verticalAlign=top;align=center;padding=10;" vertex="1" parent="1">
+                    <mxGeometry x="60" y="370" width="1280" height="150" as="geometry"/>
+                </mxCell>
+                
+                <!-- Section 3: Delayed Items -->
+                <mxCell id="delayed_title" value="Delayed Tasks & Items" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e74c3c;fontColor=#ffffff;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+                    <mxGeometry x="50" y="540" width="1300" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="delayed_container" value="" style="rounded=5;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#e74c3c;strokeWidth=2;" vertex="1" parent="1">
+                    <mxGeometry x="60" y="580" width="1280" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="delayed_header" value="Theme > Deliverable > Task | Status | Delayed Days" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ecf0f1;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+                    <mxGeometry x="60" y="580" width="1280" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="delayed_content" value="Theme A > Deliverable A2 > Task A2-3 | Delayed | -5 days&#xa;Theme B > Task B1-2 | Delayed | -2 days&#xa;Deliverable C1 | At Risk | -1 days" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=11;verticalAlign=top;align=left;padding=10;" vertex="1" parent="1">
+                    <mxGeometry x="60" y="605" width="1280" height="105" as="geometry"/>
+                </mxCell>
+                
+                <!-- Section 4: In-Progress Items -->
+                <mxCell id="inprogress_title" value="In-Progress Tasks & Items" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f39c12;fontColor=#ffffff;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+                    <mxGeometry x="50" y="730" width="1300" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="inprogress_container" value="" style="rounded=5;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#f39c12;strokeWidth=2;" vertex="1" parent="1">
+                    <mxGeometry x="60" y="770" width="1280" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="inprogress_header" value="Theme > Deliverable > Task | Progress" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ecf0f1;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+                    <mxGeometry x="60" y="770" width="1280" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="inprogress_content" value="Theme A > Deliverable A1 > Task A1-2 | 60% [===---]&#xa;Theme C > Deliverable C1 | 45% [===---------]&#xa;Theme B | 75% [======---]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=11;verticalAlign=top;align=left;padding=10;" vertex="1" parent="1">
+                    <mxGeometry x="60" y="795" width="1280" height="105" as="geometry"/>
+                </mxCell>
+                
+                <!-- Section 5: Theme Progress Overview -->
+                <mxCell id="theme_title" value="Theme Progress Overview" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#34495e;fontColor=#ffffff;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+                    <mxGeometry x="50" y="920" width="1300" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="theme_container" value="" style="rounded=5;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#34495e;strokeWidth=1;" vertex="1" parent="1">
+                    <mxGeometry x="60" y="960" width="1280" height="220" as="geometry"/>
+                </mxCell>
+                <mxCell id="theme_header" value="Theme Name | Status | Progress | Trend | Detailed Info" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#34495e;fontColor=#ffffff;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+                    <mxGeometry x="60" y="960" width="1280" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="theme_rows" value="System Infrastructure | On Track | 85% | ↑ | [View Details]&#xa;Data Migration | At Risk | 45% | → | [View Details]&#xa;Security Setup | Delayed | 20% | ↓ | [View Details]&#xa;Performance Testing | On Track | 65% | ↑ | [View Details]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=11;verticalAlign=top;align=left;padding=15;" vertex="1" parent="1">
+                    <mxGeometry x="60" y="990" width="1280" height="190" as="geometry"/>
+                </mxCell>
+                
+                <!-- Legend -->
+                <mxCell id="legend_title" value="Legend" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#7f8c8d;fontColor=#ffffff;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+                    <mxGeometry x="50" y="1210" width="1300" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="legend_content" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor:#ecf0f1;fontSize=11;" vertex="1" parent="1">
+                    <mxGeometry x="50" y="1235" width="1300" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="legend_item1" value="■ On Track (Green) - Progress is as planned or ahead&#xa;■ At Risk (Yellow) - Progress is slightly behind plan&#xa;■ Delayed (Red) - Progress is significantly behind schedule" style="rounded=0;whiteSpace=wrap;html=1;fillColor:#ecf0f1;fontSize=10;verticalAlign=top;align=left;padding=5;" vertex="1" parent="1">
+                    <mxGeometry x="60" y="1240" width="1280" height="60" as="geometry"/>
+                </mxCell>
+                
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
