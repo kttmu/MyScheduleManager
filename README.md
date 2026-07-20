@@ -1,4 +1,4 @@
-# WorkScheduler
+# MyScheduleScheduler
 
 Excel形式のWBS（Work Breakdown Structure）データを読み込み、進捗状況をJiraダッシュボード風のHTMLダッシュボードで可視化するPythonツール。
 
